@@ -177,6 +177,7 @@ namespace VOX2FTP
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
             _thread.Stop();
+            while (_thread.IsRunning) { }
             UpdateButtonsEnabled();
             UpdateTaskBarIcon();
             UpdateStatusLight();
@@ -184,6 +185,15 @@ namespace VOX2FTP
         
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_thread.IsRunning)
+            {
+                var result = MessageBox.Show("Really quit?",
+                    "Are you sure you want to exit? The recorder is currently running!", MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+                if (result != MessageBoxResult.Yes) return;
+
+                _thread.Stop();
+            }
             var settingsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "VOX2FTP");
             if (!Directory.Exists(settingsPath))

@@ -16,7 +16,7 @@ namespace VOX2FTP
         /// <summary>
         /// Thread for audio data processing
         /// </summary>
-        private readonly Thread _thread;
+        private Thread _thread;
 
         /// <summary>
         /// Is the thread running?
@@ -84,8 +84,10 @@ namespace VOX2FTP
         public void Start()
         {
             // TODO - yeah, this obviously doesn't pick back up after we stop it, need to fix that
-            if (!_thread.IsAlive)
-                _thread.Start();
+            if (_thread.IsAlive) return;
+            if (_thread.ThreadState == ThreadState.Aborted)
+                _thread = new Thread(Thread);
+            _thread.Start();
         }
 
         /// <summary>
@@ -189,7 +191,7 @@ namespace VOX2FTP
                             var sampleSize = _stream.Length - LastScanIndex;
 
 
-                            if (silentBytes > (_stream.Length - LastScanIndex) / 2)
+                            if (silentBytes > (_stream.Length - LastScanIndex) / 100)
                             {
                                 _state = RecordingState.IDLE;
                                 _stream.Position = 0;
