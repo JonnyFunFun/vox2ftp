@@ -83,6 +83,7 @@ namespace VOX2FTP
         /// </summary>
         public void Start()
         {
+            // TODO - yeah, this obviously doesn't pick back up after we stop it, need to fix that
             if (!_thread.IsAlive)
                 _thread.Start();
         }
@@ -121,7 +122,7 @@ namespace VOX2FTP
             }
             using (var ftp = new WebClient())
             {
-                ftp.Credentials = new NetworkCredential(App.Settings.FtpUser, App.Settings.FtpPass);
+                ftp.Credentials = new NetworkCredential(App.Settings.FtpUser, App.Settings.DecryptedPass);
                 ftp.UploadFile(
                     $"ftp://{App.Settings.FtpHost}:{App.Settings.FtpPort}/{App.Settings.FtpPath}/{Path.GetFileName(outFile)}",
                     WebRequestMethods.Ftp.UploadFile, outFile);

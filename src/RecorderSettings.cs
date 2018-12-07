@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Management;
 using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace VOX2FTP
@@ -48,12 +49,19 @@ namespace VOX2FTP
         /// </summary>
         public string FtpPass { get; set; }
 
+        public string DecryptedPass => Decrypt(FtpPass);
+
         /// <summary>
         /// FTP remote file path
         /// </summary>
         public string FtpPath { get; set; }
 
         private const string EncSalt = @"@eACj89GHBEPAmq6m*^!TG2m3w7!*Kkx";
+
+        public void SetPassword(string pw)
+        {
+            FtpPass = Encrypt(pw);
+        }
         
         /// <summary>
         /// Build an encryption passphrase based on motherboard serial

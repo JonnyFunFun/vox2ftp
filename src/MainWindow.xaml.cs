@@ -241,7 +241,7 @@ namespace VOX2FTP
             settings.FtpUser = FtpUserText.Text;
             if (FtpPassText.Password.Length > 0)
             {
-                settings.FtpPass = FtpPassText.Password;
+                settings.SetPassword(FtpPassText.Password);
                 FtpPassText.Password = "";
             }
             settings.FtpPath = FtpPathText.Text;
