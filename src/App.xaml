@@ -1,0 +1,9 @@
+﻿<Application x:Class="VOX2FTP.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:VOX2FTP"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Image x:Key="microphone" Source="Assets/microphone.ico"/>
+    </Application.Resources>
+</Application>
